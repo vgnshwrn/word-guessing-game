@@ -22,9 +22,10 @@ st.markdown("""
             background: linear-gradient(135deg, #c0e3ff, #e4b8ff, #ffd6a5);
             background-attachment: fixed;
             font-family: 'Helvetica Neue', sans-serif;
+            color: #222;
         }
 
-        /* 🧱 Remove Streamlit default padding */
+        /* Remove Streamlit default padding */
         .block-container {
             padding-top: 0 !important;
         }
@@ -40,39 +41,41 @@ st.markdown("""
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 10px 0 15px 0;
+            padding: 10px 0 6px 0;
             background: rgba(255, 255, 255, 0.25);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-            border-top: 2px solid rgba(255,255,255,0.3); /* creates top blending effect */
+            border-top: 2px solid rgba(255,255,255,0.3);
             z-index: 9999;
         }
 
         .school-header img {
             width: 85px;
             height: 85px;
-            border-radius: 50px;
+            border-radius: 50%;
             object-fit: cover;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .school-header-text h2 {
             margin: 0;
             color: #1f1f1f;
-            font-size: 26px;
+            font-size: 34px;
             font-weight: 700;
+            line-height: 1.05;
         }
 
-        .school-header-text p {
-            margin: 0;
-            font-size: 17px;
+        .school-header-text h3 {
+            margin-top: -4px;
+            font-size: 18px;
             color: #333;
+            font-weight: 500;
         }
 
-        /* 👣 Footer */
+        /* 👣 Footer (glass effect same as header) */
         .footer {
             position: fixed;
             bottom: 0;
@@ -81,18 +84,73 @@ st.markdown("""
             text-align: center;
             padding: 10px 25px;
             background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            font-size: 16px;
-            color: #2b2b2b;
             border-top: 1px solid rgba(255, 255, 255, 0.4);
+            font-size: 16px;
+            color: #1a1a1a;
+            z-index: 9999;
         }
 
-        /* 🧩 Space for header/footer */
+        /* 🧩 Main Content */
         .main {
-            margin-top: 180px;  /* ✅ adjust for top + logo height */
-            margin-bottom: 70px;
+            margin-top: 280px;
+            margin-bottom: 100px;
+            text-align: center;
+        }
+
+        /* 🎯 Center and style main headings */
+        h1, div[data-testid="stMarkdownContainer"] {
+            text-align: center !important;
+        }
+
+        h1 {
+            color: #202020;
+            font-size: 40px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+        }
+
+        p {
+            font-size: 30px;
+            color: #222;
+            text-align: left !important;
+        }
+
+        /* Center st.text() content */
+        div[data-testid="stText"] > div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            letter-spacing: 6px;
+            color: #1f1f1f;
+        }
+
+        /* Center buttons horizontally */
+        div[data-testid="stButton"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Style buttons */
+        .stButton>button {
+            background: linear-gradient(135deg, #e4b8ff, #ffd6a5);
+            border: none;
+            color: #1f1f1f;
+            font-weight: 600;
+            padding: 0.6em 1.2em;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: 0.3s ease;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .stButton>button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ffd6a5, #e4b8ff);
         }
 
         /* 📱 Responsive fix */
@@ -102,10 +160,13 @@ st.markdown("""
                 height: 70px;
             }
             .school-header-text h2 {
-                font-size: 22px;
+                font-size: 26px;
+            }
+            .school-header-text h3 {
+                font-size: 18px;
             }
             .main {
-                margin-top: 200px;
+                margin-top: 240px;
             }
         }
     </style>
@@ -117,7 +178,7 @@ st.markdown(f"""
     <img src="data:image/png;base64,{logo_base64}" alt="School Logo">
     <div class="school-header-text">
         <h2>The Spice Valley Public School</h2>
-        <p>CBSE Senior Secondary – Bodinayakanur</p>
+        <h3>CBSE Senior Secondary – Bodinayakanur</h3>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -135,7 +196,7 @@ st.markdown('<div class="main">', unsafe_allow_html=True)
 
 # --- Title and Intro ---
 st.title("🎯 Word Guessing Game")
-st.write("Guess the hidden word! You have **7 chances** to find it.")
+st.subheader("Guess the hidden word! You have **7 chances** to find it.")
 
 # --- Game Initialization (Session State) ---
 if "secret_word" not in st.session_state:
@@ -209,7 +270,7 @@ st.info(st.session_state.message)
 st.write(" ".join(st.session_state.hidden))
 
 # --- Restart Game Button ---
-if st.button("🔄 Restart Game"):
+if st.button("Restart Game"):
     common_words = top_n_list("en", 5000)
     valid_words = [w for w in common_words if 4 <= len(w) <= 13]
     st.session_state.secret_word = random.choice(valid_words)
