@@ -186,7 +186,7 @@ st.markdown(f"""
 # --- Footer ---
 st.markdown("""
 <div class="footer">
-    Created by <b>Tharika</b>, <b>Gowri</b>, and <b>Thanya Shree</b> – XI Std
+    Created by <b>Tharika Meenakshi N</b>, <b>Gowri Shree P</b>, and <b>Thanya Shree S</b> – XI Std
 </div>
 """, unsafe_allow_html=True)
 
